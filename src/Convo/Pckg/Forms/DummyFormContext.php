@@ -4,10 +4,13 @@ namespace Convo\Pckg\Forms;
 use Convo\Core\Workflow\AbstractBasicComponent;
 use Convo\Core\Workflow\IServiceContext;
 use Convo\Core\Params\IServiceParamsScope;
+use Convo\Core\Util\StrUtil;
+use Convo\Core\DataItemNotFoundException;
 
 class DummyFormContext extends AbstractBasicComponent implements IServiceContext, IFormsContext
 {
     private $_id;
+    private $_requiredFields = [];
 
     private $_cachedEntries;
     
@@ -15,7 +18,8 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     {
         parent::__construct( $properties);
         
-        $this->_id = $properties['id'];
+        $this->_id              =   $properties['id'];
+        $this->_requiredFields  =   array_map('trim', explode( ',', $properties['required_fields']));
     }
 	
     
@@ -43,28 +47,103 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     // FORMS
     public function validateEntry( $entry) 
     {
-        return new FormValidationResult();
-    }
-    
-    public function searchEntries($search)
-    {
-        return [];
+        $result = new FormValidationResult();
+        foreach ( $this->_requiredFields as $key) {
+            if ( !isset( $entry[$key]) || trim($entry[$key]) === '') {
+                $result->addError( $key, 'The field ['.$key.'] is required');
+            }
+        }
+        return $result;
     }
     
     public function createEntry( $entry)
     {
-        return '';
+        $this->_checkEntry( $entry);
+        
+        $entry['entry_id'] = StrUtil::uuidV4();
+        
+        $entries   =    $this->_getEntries();
+        $entries[] =    $entry;
+        $this->_saveEntries( $entries);
+        
+        return $entry['entry_id'];
     }
     
     public function deleteEntry( $entryId)
-    {}
+    {
+        $this->getEntry( $entryId);
+        
+        $entries   =   $this->_getEntries();
+        $entries   =   \array_filter( $entries, function ( $entry) use ( $entryId) {
+            return $entry['entry_id'] !== $entryId;
+        });
+        $this->_saveEntries( $entries);
+    }
     
     public function updateEntry( $entryId, $entry)
-    {}
+    {
+        $this->getEntry( $entryId);
+        
+        $entry['entry_id'] = $entryId;
+        
+        $this->_checkEntry( $entry);
+        
+        $entries    =   $this->_getEntries();
+        $updated    =   [];
+        
+        foreach ( $entries as $existing) {
+            if ( $existing['entry_id'] !== $entryId) {
+                $updated[] = $existing;
+                continue;
+            }
+            $updated[] = $entry;
+        }
+        
+        $this->_saveEntries( $updated);
+    }
+    
+    public function searchEntries( $search)
+    {
+        $entries   =   $this->_getEntries();
+        
+        if ( empty( $search)) {
+            return $entries;
+        }
+        
+        $found  =   [];
+        
+        foreach ( $entries as $entry) {
+            foreach ( $search as $key=>$val) {
+                if ( $entry[$key] === $val) {
+                    $found[] = $entry;
+                    break;
+                }
+            }
+        }
+        
+        return $found;
+    }
     
     public function getEntry( $entryId)
     {
-        return [];
+        $found  =   $this->searchEntries( ['entry_id' => $entryId]);
+        if ( empty( $found)) {
+            throw new DataItemNotFoundException( 'Entry ['.$entryId.']not found');        
+        }
+        return $found[0];
+    }
+    
+    /**
+     * Throw an exception if not valid
+     * @param array $entry
+     * @throws FormValidationException
+     */
+    private function _checkEntry( $entry) 
+    {
+        $result =   $this->validateEntry( $entry);
+        if ( !$result->isValid()) {
+            throw new FormValidationException( $result);
+        }
     }
     
     // DATA
@@ -80,11 +159,11 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         return $this->_cachedEntries;
     }
     
-    private function _saveEntries( $appointments)
+    private function _saveEntries( $entries)
     {
         $params =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_USER, $this);
-        $params->setServiceParam( 'forms', $appointments);
-        $this->_cachedEntries  =   $appointments;
+        $params->setServiceParam( 'forms', $entries);
+        $this->_cachedEntries  =   $entries;
     }
 
 	// UTIL

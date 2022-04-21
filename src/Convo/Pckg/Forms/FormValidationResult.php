@@ -6,10 +6,6 @@ class FormValidationResult
 {
 
     private $_errors    =   [];
-    
-	public function __construct()
-	{
-	}
 	
 	public function addError( $field, $msg) {
 	    $this->_errors[]   =   ['field' => $field, 'message' => $msg];
@@ -21,6 +17,14 @@ class FormValidationResult
 	
 	public function getErrors() {
 	    return $this->_errors;
+	}
+	
+	public function getMessage() {
+	    $msg   =   [];
+	    foreach ( $this->_errors as $error) {
+	        $msg[] = $error['message'].' ['.$error['field'].']';
+	    }
+	    return implode( ', ', $msg);
 	}
 
 	// UTIL
