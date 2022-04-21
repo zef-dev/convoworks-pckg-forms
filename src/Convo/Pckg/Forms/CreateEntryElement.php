@@ -30,7 +30,7 @@ class CreateEntryElement extends AbstractFormsElement
 	{
 		parent::__construct( $properties);
 		
-		$this->_entry   		  =   $properties['entry'];
+		$this->_entry         =   $properties['entry'];
 		$this->_resultVar     =   $properties['result_var'];
 		
 		foreach ( $properties['ok'] as $element) {
@@ -52,12 +52,21 @@ class CreateEntryElement extends AbstractFormsElement
 	    $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 	    
 	    $entry     =   $this->_evaluateArgs( $this->_entry);
-	    $entry_id  =   $context->createEntry( $entry);
-	    $data['entry_id'] = $entry_id;
+        
+	    try {
+	        $entry_id          =   $context->createEntry( $entry);
+	        $data['entry_id']  =   $entry_id;
+	        $elements          =   $this->_ok;
+	    } catch ( FormValidationException $e) {
+	        $this->_logger->info( $e->getMessage());
+	        $data['message']   =   $e->getMessage();
+	        $data['errors']    =   $e->getResult()->getErrors();
+	        $elements          =   $this->_validationError;
+	    }
 	    
 	    $params->setServiceParam( $this->_resultVar, $data);
 	    
-	    foreach ( $this->_ok as $elem) {
+	    foreach ( $elements as $elem) {
 	        $elem->read( $request, $response);
 	    }
 	}
