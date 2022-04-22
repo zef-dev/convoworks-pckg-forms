@@ -104,6 +104,14 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 			            'description' => 'Unique ID by which this context is referenced',
 			            'valueType' => 'string'
 			        ),
+                    'required_fields' => array(
+                        'editor_type' => 'text',
+                        'editor_properties' => array(),
+                        'defaultValue' => null,
+                        'name' => 'Required Fields',
+                        'description' => 'Comma separated fields of required list',
+                        'valueType' => 'string'
+                    ),
 			        '_preview_angular' => array(
 			            'type' => 'html',
 			            'template' => '<div class="code">' .
@@ -214,6 +222,14 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'description' => 'Flow to be executed if the form entry is deleted.',
                         'valueType' => 'class'
                     ],
+                    'result_var' => array(
+                        'editor_type' => 'text',
+                        'editor_properties' => array(),
+                        'defaultValue' => 'status',
+                        'name' => 'Result Variable Name',
+                        'description' => 'Variable with additional operation related information',
+                        'valueType' => 'string'
+                    ),
                     '_workflow' => 'read',
                     '_preview_angular' => array(
                         'type' => 'html',
@@ -254,6 +270,14 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'description' => 'Flow to be executed if the form entry is loaded.',
                         'valueType' => 'class'
                     ],
+                    'result_var' => array(
+                        'editor_type' => 'text',
+                        'editor_properties' => array(),
+                        'defaultValue' => 'status',
+                        'name' => 'Result Variable Name',
+                        'description' => 'Variable with additional operation related information',
+                        'valueType' => 'string'
+                    ),
                     '_workflow' => 'read',
                     '_preview_angular' => array(
                         'type' => 'html',
@@ -321,6 +345,14 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'description' => "Flow to be executed if the requested search didn't find anything.",
                         'valueType' => 'class'
                     ],
+                    'result_var' => array(
+                        'editor_type' => 'text',
+                        'editor_properties' => array(),
+                        'defaultValue' => 'status',
+                        'name' => 'Result Variable Name',
+                        'description' => 'Variable with additional operation related information',
+                        'valueType' => 'string'
+                    ),
                     '_workflow' => 'read',
                     '_preview_angular' => array(
                         'type' => 'html',

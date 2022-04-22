@@ -30,8 +30,8 @@ class UpdateEntryElement extends AbstractFormsElement
     {
         parent::__construct( $properties);
 
-        $this->_entry_id   		  =   $properties['entry_id'];
-        $this->_entry   		  =   $properties['entry'];
+        $this->_entry_id   	  =   $properties['entry_id'];
+        $this->_entry   	  =   $properties['entry'];
         $this->_resultVar     =   $properties['result_var'];
 
         foreach ( $properties['ok'] as $element) {
@@ -49,16 +49,27 @@ class UpdateEntryElement extends AbstractFormsElement
     public function read( IConvoRequest $request, IConvoResponse $response)
     {
         $context   =   $this->_getFormsContext();
+        $entry_id  =   $this->evaluateString($this->_entry_id);
         $data      =   [];
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
+        $this->_logger->info('Updating entry with id [' . $entry_id . ']');
+
         $entry     =   $this->_evaluateArgs( $this->_entry);
-        $entry_id  =   $context->createEntry( $entry);
-        $data['entry_id'] = $entry_id;
+
+        try {
+            $data['entry_id']   =   $context->updateEntry($entry_id,$entry);
+            $elements           =   $this->_ok;
+        } catch ( FormValidationException $e) {
+            $this->_logger->info( $e->getMessage());
+            $data['message']    =   $e->getMessage();
+            $data['errors']     =   $e->getResult()->getErrors();
+            $elements           =   $this->_validationError;
+        }
 
         $params->setServiceParam( $this->_resultVar, $data);
 
-        foreach ( $this->_ok as $elem) {
+        foreach ( $elements as $elem) {
             $elem->read( $request, $response);
         }
     }

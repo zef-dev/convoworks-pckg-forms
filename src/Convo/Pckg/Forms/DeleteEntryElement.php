@@ -24,7 +24,7 @@ class DeleteEntryElement extends AbstractFormsElement
     {
         parent::__construct( $properties);
 
-        $this->_entry_id   		  =   $properties['entry_id'];
+        $this->_entry_id   	  =   $properties['entry_id'];
         $this->_resultVar     =   $properties['result_var'];
 
         foreach ( $properties['ok'] as $element) {

@@ -2,6 +2,7 @@
 
 namespace Convo\Pckg\Forms;
 
+use Convo\Core\DataItemNotFoundException;
 use Convo\Core\Workflow\IConversationElement;
 use Convo\Core\Workflow\IConvoRequest;
 use Convo\Core\Workflow\IConvoResponse;
@@ -18,27 +19,17 @@ class LoadEntryElement extends AbstractFormsElement
     private $_ok = array();
 
     /**
-     * @var IConversationElement[]
-     */
-    private $_validationError = array();
-
-    /**
      * @param array $properties
      */
     public function __construct( $properties)
     {
         parent::__construct( $properties);
 
-        $this->_entry_id   		  =   $properties['entry_id'];
+        $this->_entry_id   	  =   $properties['entry_id'];
         $this->_resultVar     =   $properties['result_var'];
 
         foreach ( $properties['ok'] as $element) {
             $this->_ok[] = $element;
-            $this->addChild($element);
-        }
-
-        foreach ( $properties['validation_error'] as $element) {
-            $this->_validationError[] = $element;
             $this->addChild($element);
         }
     }
@@ -47,12 +38,19 @@ class LoadEntryElement extends AbstractFormsElement
     public function read( IConvoRequest $request, IConvoResponse $response)
     {
         $context   =   $this->_getFormsContext();
-        $data      =   [];
+        $entry_id  =   $this->evaluateString($this->_entry_id);
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
-        $entry     =   $this->_evaluateArgs( $this->_entry);
-        $entry_id  =   $context->createEntry( $entry);
-        $data['entry_id'] = $entry_id;
+        $this->_logger->info('Loading entry with id [' . $entry_id . ']');
+
+        try {
+            $data = ['form_id' => null];
+            $data['form_id'] = $context->getEntry($entry_id);
+            $this->_logger->info('Loaded entry with id [' . $entry_id . ']');
+        } catch ( DataItemNotFoundException $e) {
+            $this->_logger->info( $e->getMessage());
+            $data['message']   =   $e->getMessage();
+        }
 
         $params->setServiceParam( $this->_resultVar, $data);
 
