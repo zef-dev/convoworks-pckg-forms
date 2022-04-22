@@ -82,9 +82,9 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     
     public function updateEntry( $entryId, $entry)
     {
-        $this->getEntry( $entryId);
+        $existing   =   $this->getEntry( $entryId);
         
-        $entry['entry_id'] = $entryId;
+        $entry      =   array_merge( $existing, $entry, [ 'entry_id' => $entryId]);
         
         $this->_checkEntry( $entry);
         
