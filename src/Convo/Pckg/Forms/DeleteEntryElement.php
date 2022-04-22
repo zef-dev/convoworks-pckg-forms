@@ -31,11 +31,6 @@ class DeleteEntryElement extends AbstractFormsElement
             $this->_ok[] = $element;
             $this->addChild($element);
         }
-
-        foreach ( $properties['validation_error'] as $element) {
-            $this->_validationError[] = $element;
-            $this->addChild($element);
-        }
     }
 
 
