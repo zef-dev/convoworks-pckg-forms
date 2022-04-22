@@ -19,7 +19,9 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         parent::__construct( $properties);
         
         $this->_id              =   $properties['id'];
-        $this->_requiredFields  =   array_map('trim', explode( ',', $properties['required_fields']));
+        if ( !empty( trim( $properties['required_fields']))) {
+            $this->_requiredFields  =   array_map('trim', explode( ',', $properties['required_fields']));
+        }
     }
 	
     
