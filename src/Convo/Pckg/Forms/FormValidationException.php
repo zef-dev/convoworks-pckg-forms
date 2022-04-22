@@ -13,16 +13,12 @@ class FormValidationException extends \Exception
      * @param FormValidationResult $result
      */
     public function __construct( $result) {
+        parent::__construct( $result->getMessage());
         $this->_result = $result;
     }
     
     public function getResult() 
     {
         return $this->_result;
-    }
-    
-    public function getMessage()
-    {
-        return $this->_result->getMessage();
     }
 }
