@@ -10,18 +10,22 @@ use Convo\Core\Params\IServiceParamsScope;
 class SearchEntriesElement extends AbstractFormsElement
 {
     private $_search=[];
-    private $_entry = [];
     private $_resultVar;
 
     /**
      * @var IConversationElement[]
      */
-    private $_ok = array();
+    private $_multipleFlow = array();
 
     /**
      * @var IConversationElement[]
      */
-    private $_validationError = array();
+    private $_singleFlow = array();
+
+    /**
+     * @var IConversationElement[]
+     */
+    private $_emptyFlow = array();
 
     /**
      * @param array $properties
@@ -30,17 +34,21 @@ class SearchEntriesElement extends AbstractFormsElement
     {
         parent::__construct( $properties);
 
-        $this->_search   		  =   $properties['search'];
-        $this->_entry   		  =   $properties['entry'];
-        $this->_resultVar     =   $properties['result_var'];
+        $this->_search   	=   $properties['search'];
+        $this->_resultVar   =   $properties['result_var'];
 
-        foreach ( $properties['ok'] as $element) {
-            $this->_ok[] = $element;
+        foreach ( $properties['multiple_flow'] as $element) {
+            $this->_multipleFlow[] = $element;
             $this->addChild($element);
         }
 
-        foreach ( $properties['validation_error'] as $element) {
-            $this->_validationError[] = $element;
+        foreach ( $properties['single_flow'] as $element) {
+            $this->_singleFlow[] = $element;
+            $this->addChild($element);
+        }
+
+        foreach ( $properties['empty_flow'] as $element) {
+            $this->_emptyFlow[] = $element;
             $this->addChild($element);
         }
     }
@@ -52,13 +60,22 @@ class SearchEntriesElement extends AbstractFormsElement
         $data      =   [];
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
-        $entry     =   $this->_evaluateArgs( $this->_entry);
-        $entry_id  =   $context->createEntry( $entry);
-        $data['entry_id'] = $entry_id;
+        $search     =   $this->_evaluateArgs( $this->_search);
+        $result     =   $context->searchEntries( $search);
+        
+        $this->_logger->debug( 'Got result ['.print_r( $result, true).']');
+        
+        $data['result'] = $result;
 
+        $elements = $this->_multipleFlow;
+
+        if ( empty( $result)) {
+            $elements = $this->_emptyFlow;
+        }
+        
         $params->setServiceParam( $this->_resultVar, $data);
-
-        foreach ( $this->_ok as $elem) {
+        
+        foreach ( $elements as $elem) {
             $elem->read( $request, $response);
         }
     }
