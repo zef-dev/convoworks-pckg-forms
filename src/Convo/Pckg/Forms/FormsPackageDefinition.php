@@ -73,7 +73,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 						],
 						'defaultValue' => [],
 						'defaultOpen' => false,
-						'name' => 'Suggestions',
+						'name' => 'Validation error',
 						'description' => 'Flow to be executed if there are validation errrors.',
 						'valueType' => 'class'
 					],
@@ -178,7 +178,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         ],
                         'defaultValue' => [],
                         'defaultOpen' => false,
-                        'name' => 'Suggestions',
+                        'name' => 'Validation error',
                         'description' => 'Flow to be executed if there are validation errrors.',
                         'valueType' => 'class'
                     ],
@@ -328,7 +328,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         ],
                         'defaultValue' => [],
                         'defaultOpen' => false,
-                        'name' => 'Multiple',
+                        'name' => 'Single',
                         'description' => 'Flow to be executed if the requested search has found a single entry.',
                         'valueType' => 'class'
                     ],
