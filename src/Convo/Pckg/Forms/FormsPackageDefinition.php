@@ -186,7 +186,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Create <b>{{ component.properties.context_id }}</b> form entry' .
+                            'Update entry <b>{{ component.properties.entry_id }}</b> from <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
@@ -234,7 +234,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Create <b>{{ component.properties.context_id }}</b> form entry' .
+                            'Delete entry <b>{{ component.properties.entry_id }}</b> from <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
@@ -282,7 +282,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Create <b>{{ component.properties.context_id }}</b> form entry' .
+                            'Load entry <b>{{ component.properties.entry_id }}</b> from <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
@@ -357,7 +357,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Create <b>{{ component.properties.context_id }}</b> form entry' .
+                            'Search entries in <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
