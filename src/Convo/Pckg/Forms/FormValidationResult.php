@@ -19,6 +19,15 @@ class FormValidationResult
 	    return $this->_errors;
 	}
 	
+	public function getFieldsInError() 
+    {
+	    $fields = [];
+	    foreach ( $this->_errors as $error) {
+	        $fields[$error['field']] = $error['field'];
+	    }
+	    return $fields;
+	}
+	
 	public function getMessage() {
 	    $msg   =   [];
 	    foreach ( $this->_errors as $error) {
