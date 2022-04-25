@@ -63,11 +63,11 @@ class SearchEntriesElement extends AbstractFormsElement
         $search     =   $this->_evaluateArgs( $this->_search);
         $result     =   $context->searchEntries( $search);
         
-        $this->_logger->info( 'Found ['.count( $result).'] entries');
-        $this->_logger->debug( 'Got result ['.print_r( $result, true).']');
+        $this->_logger->info( 'Found ['.\count( $result).'] entries');
+        $this->_logger->debug( 'Got result ['.\print_r( $result, true).']');
         
         $data['result'] = $result;
-        $data['count'] = count( $result);
+        $data['count'] = \count( $result);
 
         $elements = $this->_multipleFlow;
 
@@ -75,6 +75,7 @@ class SearchEntriesElement extends AbstractFormsElement
             $elements = $this->_emptyFlow;
         } else if ( count( $result) === 1) {
             $elements = $this->_singleFlow;
+            $data['value'] = $result[0];
         }
         
         $params->setServiceParam( $this->_resultVar, $data);
