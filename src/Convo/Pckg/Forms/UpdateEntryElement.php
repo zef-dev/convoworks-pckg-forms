@@ -2,6 +2,7 @@
 
 namespace Convo\Pckg\Forms;
 
+use Convo\Core\DataItemNotFoundException;
 use Convo\Core\Workflow\IConversationElement;
 use Convo\Core\Workflow\IConvoRequest;
 use Convo\Core\Workflow\IConvoResponse;
@@ -58,7 +59,8 @@ class UpdateEntryElement extends AbstractFormsElement
         $entry     =   $this->_evaluateArgs( $this->_entry);
 
         try {
-            $data['entry_id']   =   $context->updateEntry($entry_id,$entry);
+            $data               =   ['existing'  =>  $context->getEntry($entry_id)];
+            $context->updateEntry($entry_id,$entry);
             $elements           =   $this->_ok;
         } catch ( FormValidationException $e) {
             $this->_logger->info( $e->getMessage());
@@ -66,6 +68,10 @@ class UpdateEntryElement extends AbstractFormsElement
             $data['errors']     =   $e->getResult()->getErrors();
             $elements           =   $this->_validationError;
         }
+
+        $data               =   ['updated'  =>  $context->getEntry($entry_id)];
+
+        $this->_logger->info('Updated entry with id [' . $entry_id . ']');
 
         $params->setServiceParam( $this->_resultVar, $data);
 

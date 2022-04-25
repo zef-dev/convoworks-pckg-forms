@@ -44,13 +44,15 @@ class LoadEntryElement extends AbstractFormsElement
         $this->_logger->info('Loading entry with id [' . $entry_id . ']');
 
         try {
-            $data = ['form_id' => null];
-            $data['form_id'] = $context->getEntry($entry_id);
+            $data = ['entry' => null];
+            $data['entry'] = $context->getEntry($entry_id);
             $this->_logger->info('Loaded entry with id [' . $entry_id . ']');
         } catch ( DataItemNotFoundException $e) {
             $this->_logger->info( $e->getMessage());
             $data['message']   =   $e->getMessage();
         }
+
+        $this->_logger->info('Loaded entry with id [' . $entry_id . ']');
 
         $params->setServiceParam( $this->_resultVar, $data);
 

@@ -74,7 +74,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 						'defaultValue' => [],
 						'defaultOpen' => false,
 						'name' => 'Validation error',
-						'description' => 'Flow to be executed if there are validation errrors.',
+						'description' => 'Flow to be executed if there are validation errors.',
 						'valueType' => 'class'
 					],
 					'_workflow' => 'read',
@@ -167,7 +167,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'defaultValue' => [],
                         'defaultOpen' => false,
                         'name' => 'OK',
-                        'description' => 'Flow to be executed if the form entry is created.',
+                        'description' => 'Flow to be executed if the form entry is updated.',
                         'valueType' => 'class'
                     ],
                     'validation_error' => [
@@ -179,7 +179,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'defaultValue' => [],
                         'defaultOpen' => false,
                         'name' => 'Validation error',
-                        'description' => 'Flow to be executed if there are validation errrors.',
+                        'description' => 'Flow to be executed if there are validation errors.',
                         'valueType' => 'class'
                     ],
                     '_workflow' => 'read',
@@ -207,7 +207,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'editor_properties' => array(),
                         'defaultValue' => '',
                         'name' => 'Entry ID',
-                        'description' => 'ID of the Entry to update.',
+                        'description' => 'ID of the Entry to delete.',
                         'valueType' => 'string'
                     ),
                     'ok' => [
