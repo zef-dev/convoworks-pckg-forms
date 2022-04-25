@@ -1,0 +1,27 @@
+<div>
+    <h3>Search Entry Element</h3>
+    <p>Searches entries by given value.</p>
+
+    <h4>Parameters:</h4>
+    <ul>
+        <li><code>Context ID</code> - ID of the referenced <code>IAppointmentsContext</code></li>
+        <li><code>Search</code> - The values you will use to search entries.</li>
+        <li><code>Return Variable Name</code> - Default <code>status</code>, name of the variable that contains additional information (<code>result</code>, <code>entry_id</code>)</li>
+    </ul>
+
+    <p>Example of <code>${status.result}</code> <var>Return Variable Name</var> value:</p>
+    <pre>
+    <code>{
+        "field 1" : "value 1",
+        "field 2" : "value 2",
+        "entry_id" : "123"
+    }</code>
+    </pre>
+
+    <h4>Flows:</h4>
+    <ul>
+        <li><code>Multiple flow</code> - will be executed if the requested search has found multiple entries</li>
+        <li><code>Single flow</code> - will be executed if the requested search has found a single entry</li>
+        <li><code>Empty flow</code> - will be executed if the requested search didn't find anything</li>
+    </ul>
+</div>

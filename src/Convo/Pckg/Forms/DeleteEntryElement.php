@@ -44,7 +44,6 @@ class DeleteEntryElement extends AbstractFormsElement
 
         $data = ['existing' => $context->getEntry($entry_id)];
         $context->deleteEntry($entry_id);
-
         $this->_logger->info('Deleted entry with id [' . $entry_id . ']');
 
         $params->setServiceParam( $this->_resultVar, $data);
