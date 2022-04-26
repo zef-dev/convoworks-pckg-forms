@@ -2,12 +2,31 @@
     <h3>Load Entry Element</h3>
     <p>Returns single entry data by an <var>entry id</var>.</p>
 
-    <h4>Parameters:</h4>
+    <h3>Parameters:</h3>
     <ul>
         <li><code>Context ID</code> - ID of the referenced <code>IAppointmentsContext</code></li>
         <li><code>Entry ID</code> - ID of the existing appointment</li>
         <li><code>Return Variable Name</code> - Default <code>status</code>, name of the variable that contains additional information (<code>entry</code>, <code>entry_id</code>)</li>
     </ul>
+
+    <h3>Status variable fields</h3>
+    <table class="table">
+        <caption>Fields for property <code class="prop-name">Data Collection Item Name</code></caption>
+        <thead>
+        <tr>
+            <th scope="col">Field</th>
+            <th scope="col">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code class="status-prop" title="Click to copy expression">entry</code></td>
+            <td>The entry which we loaded</td>
+            <td><code class="status-prop" title="Click to copy expression">message</code></td>
+            <td>Exception message</td>
+        </tr>
+        </tbody>
+    </table>
 
     <p>Example of <code>${status.entry}</code> <var>Return Variable Name</var> value:</p>
     <pre>
@@ -18,7 +37,7 @@
     }</code>
     </pre>
 
-    <h4>Flows:</h4>
+    <h3>Flows:</h3>
     <ul>
         <li><code>OK</code> - will be executed if the entry was found</li>
         <li><code>Not Found</code> - will be executed if the entry was not found</li>
