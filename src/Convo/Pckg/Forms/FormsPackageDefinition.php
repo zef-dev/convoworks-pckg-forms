@@ -41,7 +41,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 				            'multiple' => true
 				        ),
 				        'defaultValue' => array(),
-				        'name' => 'Payload',
+				        'name' => 'Entry',
 				        'description' => 'Associative array containing the entry data',
 				        'valueType' => 'array'
 				    ),
@@ -146,7 +146,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                             'multiple' => true
                         ),
                         'defaultValue' => array(),
-                        'name' => 'Payload',
+                        'name' => 'Entry',
                         'description' => 'Associative array containing the entry data',
                         'valueType' => 'array'
                     ),

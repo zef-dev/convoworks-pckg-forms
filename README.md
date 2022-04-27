@@ -1,3 +1,173 @@
-# Forms package for Convoworks
+# Formidable form package for Convoworks
 
-Forms functionality for the Convoworks
+
+This package contains conversational workflow elements for managing form entries scenarios in the [Convoworks framework](https://github.com/zef-dev/convoworks-core). It contains elements that you can use in the conversation workflow, but the form data source is just described via the `IFormsContext` interface.
+
+When we are talking about workflow components (elements), we have to primarily consider voice and conversational design needs. Their properties, sub-flows and general behavior are tailored to make conversational workflow as easy as possible. They are not related to any particular forms plugin or a similar 3rd party service provider.
+
+Forms context is on the other hand bridge between workflow elements (Convoworks) and the real, concrete form system you are using in your system.
+
+## Forms context interface
+
+`IFormsContext` describes methods that should be implemented by a target form system. If you have e.g. WordPress Formidable Forms plugin, you can easily enable it to be used with Convoworks by implementing this interface.
+
+To be properly used in the Convoworks GUI, it also has to implement `IBasicServiceComponent` and `IServiceContext`. You might consider to start your implementation like this:
+
+```php
+
+class MyCustomFormsContext extends AbstractBasicComponent implements IAppointmentsContext, IServiceContext
+
+{
+
+
+}
+
+```
+
+You can check for more about [developing custom packages](https://convoworks.com/docs/developers/develop-custom-packages/) on the Convoworks documentation and you can check our [Convoworks WP Plugin Package Template](https://github.com/zef-dev/convoworks-wp-plugin-package-template)
+
+
+### `DummyFormContext`
+
+Dummy implementation that can serve to test voice applications or as an example when creating your own `IFormsContext` implementation.
+
+Here are few predefined features that it has:
+
+* it will store entries in the Convoworks user scope
+* required fields (for error handling)
+
+
+## Workflow elements
+
+All forms package workflow elements have the `context_id` property which hooks them to the context which implements the `IFormsContext` interface. That way elements are concentrated on the conversation workflow needs, while the real business logic is delegated to the concrete implementation.
+
+Here are all common parameters:
+
+* `context_id` - Id of the referenced `IFormsContext`
+
+[//]: # (* `result_var` - svi imaju &#40;podaci drukciji kod elementa&#41;)
+
+Some elements have multiple sub-flows depending on the result we got. This kind of approach enables you to use less `IF` statements in your workflow. But in order not to force you to split workflow, some of the flows are optional and when left empty, the default flow will be executed.
+
+
+### `CreateEntryElement`
+
+This element will create an entry and will generate an entry_id for the entry value.
+
+Parameters:
+
+* `entry` - The entry data that will be written
+* `result_var` - Default `status`, name of the variable that contains additional information (`entry_id` : ID of the newly created entry, `entry`: entry value)
+
+Flows:
+
+* `ok` - executes when the entry could be created
+* `validation_error` - executes when the entry has validation errors
+
+
+### `UpdateEntryElement`
+
+Element which updates existing entry data.
+
+Parameters:
+
+* `entry_id` - ID of the existing entry
+* `entry` - The entry data that will overwrite the previous data
+* `result_var` - Default `status`, name of the variable that contains additional information (`entry_id` : id of the newly created entry, `entry`: entry value)
+
+Flows:
+* `ok` - will be executed when the entry is updated
+
+
+### `DeleteEntryElement`
+
+This element will delete an existing entry.
+
+Parameters:
+
+* `entry_id` - ID of the existing entry
+* `result_var` - Default `status`, name of the variable that contains additional information (`existing` : previous form entry as you would get it with load entry element)
+
+Flows:
+* `ok` - will be executed when the entry is deleted
+
+
+### `LoadEntryElement`
+
+This element will load existing entries for the current user.
+
+Parameters:
+
+* `entry_id` - ID of the existing entry
+* `return_var` - Default `status`, name of the variable that contains additional information (`entry`, `entry_id`)
+
+Flows:
+* `ok` - will be executed when the entry is loaded
+* `not found` - will be executed if the entry was not found
+
+Single entry representation as JSON.
+
+```json
+{
+      "field 1" : "value 1",
+      "field 2" : "value 2",
+      "entry_id" : "123"
+      }
+}
+```
+
+
+### `SearchEntryElement`
+
+This element searches entries by given value.
+
+Parameters:
+
+* `entry_id` - ID of the existing entry
+* `result_var` - Default `status`, name of the variable that contains additional information (`result`: array of entry values)
+
+Flows:
+* `ok` - Executed when the appointment is loaded.
+* `not found` - will be executed if the entry was not found
+
+
+### Features
+
+This conversational service enables users to create, update or delete appointments. It is designed to provide a nice and rich user experience.
+Users are able to create new entries, check if they have existing ones and cancel or update them.
+
+Other characteristics and requirements:
+
+* Voice only interface
+
+[//]: # (* It will require from user to enable access to profile data in Alexa app &#40;name, email&#41;)
+
+
+
+[//]: # (### Initial setup)
+
+[//]: # ()
+[//]: # (If you just installed Convoworks WP, you might want to check the [Connect to Amazon and create your first Alexa skill]&#40;https://youtu.be/7lx5_ZqazvA&#41; from our [Convoworks basics]&#40;https://youtube.com/playlist?list=PL9eUOVS2fICHc7FF48opQyOWUDVvNoNFD&#41; video tutorial series.)
+
+[//]: # ()
+[//]: # (Open Convoworks WP services view and click on the "Create new" button.)
+
+[//]: # (Enter your service name, select the "My Booking" template and press the "Submit" button.)
+
+[//]: # ()
+[//]: # (Now navigate to the service "Configuration" view and select "amazon alexa" configuration button. In the "Amazon Alexa Skill Permissions" section check the "Full Name" and the "Customer Email Address" checkboxes. Press "Save configuration" and your service will be propagated to Alexa Console.)
+
+[//]: # ()
+[//]: # (You might also change `APP_NAME` in the "Variables'' view. If you plan to use some other appointment context, you should change `APPOINTMENTS` to the appropriate id.)
+
+[//]: # ()
+[//]: # (Go to the Alexa app &#40;or web app https://alexa.amazon.com&#41;, click on "Your Skills", select the "Dev skills" tab, find your new skill and enable it.)
+
+[//]: # ()
+[//]: # (Your Booking skill now can be tested on your Alexa enabled devices.)
+
+[//]: # ()
+[//]: # ()
+[//]: # (---)
+
+For more information, please check out [convoworks.com](https://convoworks.com)
