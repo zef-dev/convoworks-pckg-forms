@@ -1,4 +1,4 @@
-# Formidable form package for Convoworks
+# Forms package for Convoworks
 
 
 This package contains conversational workflow elements for managing form entries scenarios in the [Convoworks framework](https://github.com/zef-dev/convoworks-core). It contains elements that you can use in the conversation workflow, but the form data source is just described via the `IFormsContext` interface.
@@ -15,7 +15,7 @@ To be properly used in the Convoworks GUI, it also has to implement `IBasicServi
 
 ```php
 
-class MyCustomFormsContext extends AbstractBasicComponent implements IAppointmentsContext, IServiceContext
+class MyCustomFormsContext extends AbstractBasicComponent implements IFormsContext, IServiceContext
 
 {
 
@@ -56,7 +56,7 @@ This element will create an entry and will generate an entry_id for the entry va
 
 Parameters:
 
-* `entry` - The entry data that will be written
+* `entry` - The entry data that will be written (a key value)
 * `result_var` - Default `status`, name of the variable that contains additional information (`entry_id` : ID of the newly created entry, `entry`: entry value)
 
 Flows:
@@ -72,7 +72,7 @@ Element which updates existing entry data.
 Parameters:
 
 * `entry_id` - ID of the existing entry
-* `entry` - The entry data that will overwrite the previous data
+* `entry` - The entry data that will overwrite the previous data (a key value)
 * `result_var` - Default `status`, name of the variable that contains additional information (`entry_id` : id of the newly created entry, `entry`: entry value)
 
 Flows:
@@ -127,13 +127,13 @@ Parameters:
 * `result_var` - Default `status`, name of the variable that contains additional information (`result`: array of entry values)
 
 Flows:
-* `ok` - Executed when the appointment is loaded.
+* `ok` - Executed when the form is loaded.
 * `not found` - will be executed if the entry was not found
 
 
 ### Features
 
-This conversational service enables users to create, update or delete appointments. It is designed to provide a nice and rich user experience.
+This conversational service enables users to create, update or delete forms. It is designed to provide a nice and rich user experience.
 Users are able to create new entries, check if they have existing ones and cancel or update them.
 
 Other characteristics and requirements:
