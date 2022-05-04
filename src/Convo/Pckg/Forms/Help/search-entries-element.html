@@ -1,17 +1,17 @@
 <div>
     <h3>Search Entry Element</h3>
-    <p>Searches entries by given value.</p>
+    <p>Searches entries by given filter.</p>
 
     <h3>Parameters:</h3>
     <ul>
-        <li><code>Context ID</code> - ID of the referenced <code>IFormsContext</code></li>
+        <li><code>Context ID</code> - ID of the referenced form context</li>
         <li><code>Search</code> - The values you will use to search entries.</li>
-        <li><code>Return Variable Name</code> - Default <code>status</code>, name of the variable that contains additional information (<code>result</code> - array of entry values)</li>
+        <li><code>Return Variable Name</code> - Default <code>status</code>, name of the variable that contains additional information</li>
     </ul>
 
     <h3>Status variable fields</h3>
     <table class="table">
-        <caption>Fields for property <code class="prop-name">Data Collection Item Name</code></caption>
+        <caption>Fields for property <code class="prop-name">Result Variable Name</code></caption>
         <thead>
         <tr>
             <th scope="col">Field</th>
@@ -21,24 +21,33 @@
         <tbody>
         <tr>
             <td><code class="status-prop" title="Click to copy expression">result</code></td>
-            <td>The searched entries values which we found</td>
+            <td>Array of entries found</td>
+        </tr>
+        <tr>
+            <td><code class="status-prop" title="Click to copy expression">count</code></td>
+            <td>Total count of found results</td>
+        </tr>
+        <tr>
+            <td><code class="status-prop" title="Click to copy expression">value</code></td>
+            <td>Single entry. Available only in "Single flow"</td>
         </tr>
         </tbody>
     </table>
 
-    <p>Example of <code>${status.result}</code> <var>Return Variable Name</var> value:</p>
+    <p>Single entry example:</p>
     <pre>
     <code>{
-        "field 1" : "value 1",
-        "field 2" : "value 2",
-        "entry_id" : "123"
+        "custom_field_1" : "value 1",
+        "custom_field_2" : "value 2",
+        "entry_id" : 123,
+        "user_id" : 1,
     }</code>
     </pre>
 
     <h3>Flows:</h3>
     <ul>
         <li><code>Multiple flow</code> - will be executed if the requested search has found multiple entries</li>
-        <li><code>Single flow</code> - will be executed if the requested search has found a single entry</li>
+        <li><code>Single flow</code> - will be executed if the requested search has found a single entry. If empty, <code>Multiple flow</code> will be executed</li>
         <li><code>Empty flow</code> - will be executed if the requested search didn't find anything</li>
     </ul>
 </div>
