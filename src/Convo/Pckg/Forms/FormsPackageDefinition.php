@@ -324,7 +324,8 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'editor_type' => 'service_components',
                         'editor_properties' => [
                             'allow_interfaces' => ['\Convo\Core\Workflow\IConversationElement'],
-                            'multiple' => true
+                            'multiple' => true,
+                            'hideWhenEmpty' => true
                         ],
                         'defaultValue' => [],
                         'defaultOpen' => false,

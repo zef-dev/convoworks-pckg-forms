@@ -72,9 +72,9 @@ class SearchEntriesElement extends AbstractFormsElement
         $elements = $this->_multipleFlow;
 
         if ( empty( $result)) {
-            $elements = $this->_emptyFlow;
+            $elements = count( $this->_emptyFlow) ? $this->_emptyFlow : $this->_multipleFlow;
         } else if ( count( $result) === 1) {
-            $elements = $this->_singleFlow;
+            $elements = count( $this->_singleFlow) ? $this->_singleFlow : $this->_multipleFlow;
             $data['value'] = $result[0];
         }
         
