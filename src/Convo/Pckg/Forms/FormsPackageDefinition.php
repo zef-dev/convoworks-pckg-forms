@@ -357,7 +357,10 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Search entries in <b>{{ component.properties.context_id }}</b>' .
+                            '<span class="statement">SEARCH ENTRIES</span> in <b>{{ component.properties.context_id }}</b>' .
+                        ' <span ng-repeat="(key, val) in component.properties.search track by key">' .
+                        ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
+                        ' </span>' .
                             '</div>'
                     ),
                     '_help' =>  array(
