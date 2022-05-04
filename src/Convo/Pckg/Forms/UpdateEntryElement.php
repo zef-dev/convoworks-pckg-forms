@@ -2,7 +2,6 @@
 
 namespace Convo\Pckg\Forms;
 
-use Convo\Core\DataItemNotFoundException;
 use Convo\Core\Workflow\IConversationElement;
 use Convo\Core\Workflow\IConvoRequest;
 use Convo\Core\Workflow\IConvoResponse;
