@@ -81,7 +81,10 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 					'_preview_angular' => array(
 						'type' => 'html',
 						'template' => '<div class="code">' .
-							'Create <b>{{ component.properties.context_id }}</b> form entry' .
+							'<span class="statement">CREATE FORM ENTRY</span> in <b>{{ component.properties.context_id }}</b> <span class="statement">IN</span> ' .
+					    ' <span ng-repeat="(key, val) in component.properties.entry track by key">' .
+					    ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
+					    ' </span>' .
 							'</div>'
 					),
 					'_help' =>  array(
@@ -115,7 +118,8 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 			        '_preview_angular' => array(
 			            'type' => 'html',
 			            'template' => '<div class="code">' .
-			            '<span class="statement">Dummy form </span> <b>[{{ contextElement.properties.id }}]</b>' .
+			            '<span class="statement">DUMMY FORM CONTEXT</span> <b>{{ contextElement.properties.id }}</b>' .
+			            '<span ng-if="contextElement.properties.required_fields"> with required fields <b>{{ contextElement.properties.required_fields}}</b></span>' .
 			            '</div>'
 			        ),
 			        '_workflow' => 'datasource',
@@ -186,7 +190,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Update entry <b>{{ component.properties.entry_id }}</b> from <b>{{ component.properties.context_id }}</b>' .
+                            '<span class="statement">UPDATE FORM ENTRY</span> <b>{{ component.properties.entry_id }}</b> <span class="statement">IN</span> <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
@@ -234,7 +238,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Delete entry <b>{{ component.properties.entry_id }}</b> from <b>{{ component.properties.context_id }}</b>' .
+                            '<span class="statement">DELETE FORM ENTRY</span> <b>{{ component.properties.entry_id }}</b> <span class="statement">IN</span> <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
@@ -282,7 +286,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            'Load entry <b>{{ component.properties.entry_id }}</b> from <b>{{ component.properties.context_id }}</b>' .
+                            '<span class="statement">LOAD FORM ENTRY</span> <b>{{ component.properties.entry_id }}</b> <span class="statement">FROM</span> <b>{{ component.properties.context_id }}</b>' .
                             '</div>'
                     ),
                     '_help' =>  array(
@@ -358,7 +362,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            '<span class="statement">SEARCH ENTRIES</span> in <b>{{ component.properties.context_id }}</b>' .
+                            '<span class="statement">SEARCH FORM ENTRIES</span> in <b>{{ component.properties.context_id }}</b>' .
                         ' <span ng-repeat="(key, val) in component.properties.search track by key">' .
                         ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
                         ' </span>' .
