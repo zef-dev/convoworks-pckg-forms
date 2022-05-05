@@ -70,12 +70,18 @@ class SearchEntriesElement extends AbstractFormsElement
         $data['count'] = \count( $result);
 
         $elements = $this->_multipleFlow;
-
+        $this->_logger->debug( 'Default is multiple results flow');
         if ( empty( $result)) {
-            $elements = count( $this->_emptyFlow) ? $this->_emptyFlow : $this->_multipleFlow;
+            if ( count( $this->_emptyFlow)) {
+                $this->_logger->info( 'Using empty flow ...');
+                $elements = $this->_emptyFlow;
+            }
         } else if ( count( $result) === 1) {
-            $elements = count( $this->_singleFlow) ? $this->_singleFlow : $this->_multipleFlow;
-            $data['value'] = $result[0];
+            if ( count( $this->_singleFlow)) {
+                $this->_logger->info( 'Using single result flow ...');
+                $elements = $this->_singleFlow;
+                $data['value'] = $result[0];
+            }
         }
         
         $params->setServiceParam( $this->_resultVar, $data);
