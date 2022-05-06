@@ -106,6 +106,28 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     
     public function searchEntries( $search, $offset=0, $limit=self::DEFAULT_LIMIT, $orderBy=[])
     {
+        $found  =   $this->_performSearch( $search);
+        $found  =   array_slice( $found, $offset, $limit);
+        
+        if ( !empty( $orderBy)) 
+        {
+            usort( $found, function ( $a, $b) use ($orderBy) {
+                foreach ( $orderBy as $key=>$val)
+                {
+                    $ret = strcomp( $a[$key], $b[$key]);
+                    if ( $ret !== 0) {
+                        return $ret * ($val==='DESC' ? -1 : 1);
+                    }
+                }
+                return 0;
+            });
+        }
+        
+        return $found;
+    }
+    
+    private function _performSearch( $search) 
+    {
         $entries   =   $this->_getEntries();
         
         if ( empty( $search)) {
@@ -122,13 +144,13 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
                 }
             }
         }
-        
         return $found;
     }
     
     public function getSearchCount( $search) 
     {
-        return 0;
+        $found  =   $this->_performSearch( $search);
+        return count( $found);
     }
     
     public function getEntry( $entryId)
