@@ -9,7 +9,10 @@ use Convo\Core\Params\IServiceParamsScope;
 
 class SearchEntriesElement extends AbstractFormsElement
 {
-    private $_search=[];
+    private $_search = [];
+    private $_limit;
+    private $_offset;
+    private $_orderBy = [];
     private $_resultVar;
 
     /**
@@ -36,6 +39,9 @@ class SearchEntriesElement extends AbstractFormsElement
 
         $this->_search   	=   $properties['search'];
         $this->_resultVar   =   $properties['result_var'];
+        $this->_limit       =   $properties['limit'];
+        $this->_offset      =   $properties['offset'];
+        $this->_orderBy     =   $properties['order_by'];
 
         foreach ( $properties['multiple_flow'] as $element) {
             $this->_multipleFlow[] = $element;
@@ -61,7 +67,12 @@ class SearchEntriesElement extends AbstractFormsElement
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
         $search     =   $this->_evaluateArgs( $this->_search);
-        $result     =   $context->searchEntries( $search);
+        $order_by   =   $this->_evaluateArgs( $this->_orderBy);
+        $offset     =   $this->evaluateString( $this->_offset);
+        $limit      =   $this->evaluateString( $this->_limit);
+        
+        
+        $result     =   $context->searchEntries( $search, $offset, $limit, $order_by);
         
         $this->_logger->info( 'Found ['.\count( $result).'] entries');
         $this->_logger->debug( 'Got result ['.\print_r( $result, true).']');
@@ -90,7 +101,16 @@ class SearchEntriesElement extends AbstractFormsElement
             $elem->read( $request, $response);
         }
     }
-
+    
+    private function _sanitizeOrderDirection( $dir)
+    {
+        $dir = strtoupper( $dir);
+        if ( $dir === 'ASC' || $dir === 'DESC') {
+            return $dir;
+        }
+        return '';
+    }
+    
     // UTIL
     public function __toString()
     {

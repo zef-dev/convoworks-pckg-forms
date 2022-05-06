@@ -312,6 +312,32 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'description' => 'Search',
                         'valueType' => 'array'
                     ),
+                    'limit'=>array(
+                        'editor_type' => 'text',
+                        'editor_properties' => array(),
+                        'defaultValue' => IFormsContext::DEFAULT_LIMIT,
+                        'name' => 'Limit',
+                        'description' => 'Limit results',
+                        'valueType' => 'string'
+                    ),
+                    'offset'=>array(
+                        'editor_type' => 'text',
+                        'editor_properties' => array(),
+                        'defaultValue' => 0,
+                        'name' => 'Offset',
+                        'description' => 'Offset from where to start returning results',
+                        'valueType' => 'string'
+                    ),
+                    'order_by' => array(
+                        'editor_type' => 'params',
+                        'editor_properties' => array(
+                            'multiple' => true
+                        ),
+                        'defaultValue' => array(),
+                        'name' => 'Order by',
+                        'description' => 'Order by. Field name and [ASC|DESC] pairs',
+                        'valueType' => 'array'
+                    ),
                     'multiple_flow' => [
                         'editor_type' => 'service_components',
                         'editor_properties' => [
