@@ -75,11 +75,11 @@ class SearchEntriesElement extends AbstractFormsElement
         
         $result     =   $context->searchEntries( $search, $offset, $limit, $order_by);
         
-        $this->_logger->info( 'Found ['.\count( $result).'] entries');
-        $this->_logger->debug( 'Got result ['.\print_r( $result, true).']');
-        
         $data['result'] = $result;
-        $data['count'] = \count( $result);
+        $data['count'] = $context->getSearchCount( $search);
+        
+        $this->_logger->info( 'Found ['.$data['count'].'] entries');
+        $this->_logger->debug( 'Got result ['.\print_r( $data['result'], true).']');
 
         $elements = $this->_multipleFlow;
         $this->_logger->debug( 'Default is multiple results flow');
