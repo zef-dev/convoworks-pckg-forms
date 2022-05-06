@@ -390,6 +390,11 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                         'template' => '<div class="code">' .
                             '<span class="statement">SEARCH FORM ENTRIES</span> in <b>{{ component.properties.context_id }}</b>' .
                         ' <span ng-repeat="(key, val) in component.properties.search track by key">' .
+                        ' <span class="statement" ng-if="$first"><br>WHERE</span>' .
+                        ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
+                        ' </span>' .
+                        ' <span ng-repeat="(key, val) in component.properties.order_by track by key">' .
+                        ' <span class="statement" ng-if="$first"><br>ORDER BY</span>' .
                         ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
                         ' </span>' .
                             '</div>'
