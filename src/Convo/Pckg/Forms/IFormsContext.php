@@ -12,6 +12,7 @@ use Convo\Core\DataItemNotFoundException;
  */
 interface IFormsContext
 {
+    const DEFAULT_LIMIT    =   3;
     
     /**
      * @param array $entry
@@ -50,8 +51,12 @@ interface IFormsContext
 	
 	/**
 	 * @param array $search
+	 * @param int $offset
+	 * @param int $limit
+	 * @param array $orderBy
+	 * @return array of entries
 	 */
-	public function searchEntries( $search);
+	public function searchEntries( $search, $offset=0, $limit=self::DEFAULT_LIMIT, $orderBy=[]);
 	
 	
 }

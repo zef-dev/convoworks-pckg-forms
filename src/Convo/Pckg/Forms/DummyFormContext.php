@@ -104,7 +104,7 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         $this->_saveEntries( $updated);
     }
     
-    public function searchEntries( $search)
+    public function searchEntries( $search, $offset=0, $limit=self::DEFAULT_LIMIT, $orderBy=[])
     {
         $entries   =   $this->_getEntries();
         
