@@ -126,6 +126,11 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         return $found;
     }
     
+    public function getSearchCount( $search) 
+    {
+        return 0;
+    }
+    
     public function getEntry( $entryId)
     {
         $found  =   $this->searchEntries( ['entry_id' => $entryId]);

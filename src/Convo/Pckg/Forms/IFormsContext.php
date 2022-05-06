@@ -58,5 +58,11 @@ interface IFormsContext
 	 */
 	public function searchEntries( $search, $offset=0, $limit=self::DEFAULT_LIMIT, $orderBy=[]);
 	
+	/**
+	 * @param array $search
+	 * @return int
+	 */
+	public function getSearchCount( $search);
+	
 	
 }
