@@ -81,7 +81,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 					'_preview_angular' => array(
 						'type' => 'html',
 						'template' => '<div class="code">' .
-							'<span class="statement">CREATE FORM ENTRY</span> in <b>{{ component.properties.context_id }}</b> <span class="statement">IN</span> ' .
+							'<span class="statement">CREATE FORM ENTRY</span> <span class="statement">IN</span> <b>{{ component.properties.context_id }}</b> ' .
 					    ' <span ng-repeat="(key, val) in component.properties.entry track by key">' .
 					    ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
 					    ' </span>' .
