@@ -69,6 +69,7 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
             'time_created' => time(),
             'meta_values' => $entry
         ];
+        
         $this->_saveEntries( $entries);
         
         return $entry_id;
@@ -94,12 +95,15 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         $entries    =   $this->_getEntries();
         $updated    =   [];
         
-        foreach ( $entries as $existing) {
-            if ( $existing['entry_id'] !== $entryId) {
+        foreach ( $entries as $en) 
+        {
+            if ( $en['entry_id'] === $entryId) {
+                $existing['time_updated'] = time();
                 $updated[] = $existing;
+                $this->_logger->info( 'Updating entry ['.$en['entry_id'].']');
                 continue;
             }
-            $updated[] = $entry;
+            $updated[] = $en;
         }
         
         $this->_saveEntries( $updated);
@@ -129,6 +133,7 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     
     private function _performSearch( $search) 
     {
+        $this->_logger->debug( 'Searching for ['.print_r( $search, true).']');
         $entries   =   $this->_getEntries();
         
         if ( empty( $search)) {
@@ -137,19 +142,25 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         
         $found  =   [];
         
-        foreach ( $entries as $entry) {
-            foreach ( $search as $key=>$val) {
-                if ( isset( $entry[$key]) && $entry[$key] === $val) {
-                    $found[] = $entry;
-                    break;
-                }
-                if ( isset( $entry['meta_values'][$key]) && $entry['meta_values'][$key] === $val) {
-                    $found[] = $entry;
-                    break;
-                }
+        foreach ( $entries as $entry) 
+		{
+            if ( $this->_isEntryMatch( $entry, $search)) {
+                $found[] = $entry;
             }
         }
         return $found;
+    }
+    
+    private function _isEntryMatch( $entry, $search) {
+        foreach ( $search as $key=>$val) {
+            if ( isset( $entry[$key]) && ($entry[$key] === $val)) {
+                return true;
+            }
+            if ( isset( $entry['meta_values'][$key]) && ($entry['meta_values'][$key] === $val)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public function getSearchCount( $search) 
