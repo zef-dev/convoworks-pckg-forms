@@ -9,7 +9,7 @@ use Convo\Core\Params\IServiceParamsScope;
 
 class LoadEntryElement extends AbstractFormsElement
 {
-    private $_entry_id;
+    private $_entryId;
     private $_resultVar;
 
     /**
@@ -24,7 +24,7 @@ class LoadEntryElement extends AbstractFormsElement
     {
         parent::__construct( $properties);
 
-        $this->_entry_id   	  =   $properties['entry_id'];
+        $this->_entryId   	  =   $properties['entry_id'];
         $this->_resultVar     =   $properties['result_var'];
 
         foreach ( $properties['ok'] as $element) {
@@ -37,14 +37,14 @@ class LoadEntryElement extends AbstractFormsElement
     public function read( IConvoRequest $request, IConvoResponse $response)
     {
         $context   =   $this->_getFormsContext();
-        $entry_id  =   $this->evaluateString($this->_entry_id);
+        $entry_id  =   $this->evaluateString($this->_entryId);
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
         $this->_logger->info('Loading entry with id [' . $entry_id . ']');
 
-        $data = ['entry' => null];
-        $data['entry'] = $context->getEntry($entry_id);
-        $this->_logger->info('Loaded entry with id [' . $entry_id . ']');
+        $data       =   [];
+        $data['entry'] = $context->getEntry( $entry_id);
+        $this->_logger->info( 'Loaded entry with id [' . $entry_id . ']');
 
         $params->setServiceParam( $this->_resultVar, $data);
 
@@ -56,7 +56,7 @@ class LoadEntryElement extends AbstractFormsElement
     // UTIL
     public function __toString()
     {
-        return parent::__toString();
+        return parent::__toString().'['.$this->_entryId.']';
     }
 
 

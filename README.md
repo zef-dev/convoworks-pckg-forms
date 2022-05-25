@@ -93,26 +93,27 @@ Flows:
 
 ### `LoadEntryElement`
 
-This element will load existing entries for the current user.
+This element will load existing entry by its id.
 
 Parameters:
 
 * `entry_id` - ID of the existing entry
-* `result_var` - Default `status`, name of the variable that contains additional information (`entry`, `entry_id`)
+* `result_var` - Default `status`, name of the variable that contains additional information (`entry`)
 
 Flows:
 * `ok` - will be executed when the entry is loaded
-* `not found` - will be executed if the entry was not found
 
 Single entry representation as JSON.
 
 ```json
 {
-      "field 1" : "value 1",
-      "field 2" : "value 2",
-      "entry_id" : "123"
-      }
-}
+        "entry_id" : "123",
+        "user_id" : "123",
+        "meta_values" : {
+            "key_1" : "value 1",
+            "key_2" : "value 2"
+        }
+    }
 ```
 
 
