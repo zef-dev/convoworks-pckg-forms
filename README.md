@@ -72,11 +72,11 @@ Parameters:
 
 * `entry_id` - ID of the existing entry
 * `entry` - The entry data that will overwrite the previous data (a key value)
-* `result_var` - Default `status`, name of the variable that contains additional information (`entry_id` : id of the newly created entry, `entry`: entry value)
+* `result_var` - Default `status`, name of the variable that contains additional information. If entry is updated (`previous` : entry data before update, `updated` : entry after update), if failed ( `message` : string message, `errors` : array of detailed errors)
 
 Flows:
 * `ok` - will be executed when the entry is updated
-
+* `validation_error` - executes when the entry has validation errors
 
 ### `DeleteEntryElement`
 

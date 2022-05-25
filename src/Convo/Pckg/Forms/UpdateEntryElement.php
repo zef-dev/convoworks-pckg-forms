@@ -49,17 +49,18 @@ class UpdateEntryElement extends AbstractFormsElement
     public function read( IConvoRequest $request, IConvoResponse $response)
     {
         $context   =   $this->_getFormsContext();
-        $entry_id  =   $this->evaluateString($this->_entry_id);
+        $entry_id  =   $this->evaluateString( $this->_entry_id);
         $data      =   [];
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
-        $this->_logger->info('Updating entry with id [' . $entry_id . ']');
+        $this->_logger->info( 'Updating entry with id [' . $entry_id . ']');
 
         $entry     =   $this->_evaluateArgs( $this->_entry);
 
         try {
-            $data               =   ['existing'  =>  $context->getEntry($entry_id)];
-            $context->updateEntry($entry_id,$entry);
+            $data['previous']   =   $context->getEntry( $entry_id);
+            $context->updateEntry( $entry_id, $entry);
+            $data['updated']   =   $context->getEntry( $entry_id);
             $elements           =   $this->_ok;
         } catch ( FormValidationException $e) {
             $this->_logger->info( $e->getMessage());
@@ -68,7 +69,7 @@ class UpdateEntryElement extends AbstractFormsElement
             $elements           =   $this->_validationError;
         }
 
-        $data               =   ['updated'  =>  $context->getEntry($entry_id)];
+        
 
         $this->_logger->info('Updated entry with id [' . $entry_id . ']');
 
