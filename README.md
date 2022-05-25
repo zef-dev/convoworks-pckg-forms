@@ -98,7 +98,7 @@ This element will load existing entries for the current user.
 Parameters:
 
 * `entry_id` - ID of the existing entry
-* `return_var` - Default `status`, name of the variable that contains additional information (`entry`, `entry_id`)
+* `result_var` - Default `status`, name of the variable that contains additional information (`entry`, `entry_id`)
 
 Flows:
 * `ok` - will be executed when the entry is loaded
@@ -129,44 +129,5 @@ Flows:
 * `ok` - Executed when the form is loaded.
 * `not found` - will be executed if the entry was not found
 
-
-### Features
-
-This conversational service enables users to create, update or delete forms. It is designed to provide a nice and rich user experience.
-Users are able to create new entries, check if they have existing ones and cancel or update them.
-
-Other characteristics and requirements:
-
-* Voice only interface
-
-[//]: # (* It will require from user to enable access to profile data in Alexa app &#40;name, email&#41;)
-
-
-
-[//]: # (### Initial setup)
-
-[//]: # ()
-[//]: # (If you just installed Convoworks WP, you might want to check the [Connect to Amazon and create your first Alexa skill]&#40;https://youtu.be/7lx5_ZqazvA&#41; from our [Convoworks basics]&#40;https://youtube.com/playlist?list=PL9eUOVS2fICHc7FF48opQyOWUDVvNoNFD&#41; video tutorial series.)
-
-[//]: # ()
-[//]: # (Open Convoworks WP services view and click on the "Create new" button.)
-
-[//]: # (Enter your service name, select the "My Booking" template and press the "Submit" button.)
-
-[//]: # ()
-[//]: # (Now navigate to the service "Configuration" view and select "amazon alexa" configuration button. In the "Amazon Alexa Skill Permissions" section check the "Full Name" and the "Customer Email Address" checkboxes. Press "Save configuration" and your service will be propagated to Alexa Console.)
-
-[//]: # ()
-[//]: # (You might also change `APP_NAME` in the "Variables'' view. If you plan to use some other appointment context, you should change `APPOINTMENTS` to the appropriate id.)
-
-[//]: # ()
-[//]: # (Go to the Alexa app &#40;or web app https://alexa.amazon.com&#41;, click on "Your Skills", select the "Dev skills" tab, find your new skill and enable it.)
-
-[//]: # ()
-[//]: # (Your Booking skill now can be tested on your Alexa enabled devices.)
-
-[//]: # ()
-[//]: # ()
-[//]: # (---)
 
 For more information, please check out [convoworks.com](https://convoworks.com)
