@@ -1,7 +1,7 @@
 # Forms package for Convoworks
 
 
-This package contains conversational workflow elements for managing form entries scenarios in the [Convoworks framework](https://github.com/zef-dev/convoworks-core). It contains elements that you can use in the conversation workflow, but the form data source is just described via the `IFormsContext` interface.
+This package contains conversational workflow elements for managing form entries scenarios in the [Convoworks framework](https://github.com/zef-dev/convoworks-core). It contains elements that you can use in the conversation workflow, but the form data source is just described via the [IFormsContext](https://github.com/zef-dev/convoworks-pckg-forms/blob/main/src/Convo/Pckg/Forms/IFormsContext.php) interface.
 
 When we are talking about workflow components (elements), we have to primarily consider voice and conversational design needs. Their properties, sub-flows and general behavior are tailored to make conversational workflow as easy as possible. They are not related to any particular forms plugin or a similar 3rd party service provider.
 
@@ -43,21 +43,20 @@ All forms package workflow elements have the `context_id` property which hooks t
 
 Here are all common parameters:
 
-* `context_id` - Id of the referenced `IFormsContext`
-
-[//]: # (* `result_var` - svi imaju &#40;podaci drukciji kod elementa&#41;)
+* `context_id` - Id of the referenced form context (context component that implements `IFormsContext`)
+* `result_var` - Variable that contains result. It is different for each element, so it will be descrived bellow.
 
 Some elements have multiple sub-flows depending on the result we got. This kind of approach enables you to use less `IF` statements in your workflow. But in order not to force you to split workflow, some of the flows are optional and when left empty, the default flow will be executed.
 
 
 ### `CreateEntryElement`
 
-This element will create an entry and will generate an entry_id for the entry value.
+This element will create an entry and will retunrn newly created entry_id.
 
 Parameters:
 
 * `entry` - The entry data that will be written (a key value)
-* `result_var` - Default `status`, name of the variable that contains additional information (`entry_id` : ID of the newly created entry, `entry`: entry value)
+* `result_var` - Default `status`, name of the variable that contains additional information. If entry is created (`entry_id` : ID of the newly created entry), if failed ( `message` : string message, `errors` : array of detailed errors)
 
 Flows:
 

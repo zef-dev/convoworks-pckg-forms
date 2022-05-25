@@ -22,7 +22,7 @@ class FormsPackageDefinition extends AbstractPackageDefinition
 	        'editor_properties' => array(),
 	        'defaultValue' => 'forms',
 	        'name' => 'Context ID',
-	        'description' => 'Unique ID by which this context is referenced',
+	        'description' => 'Id of the referenced forms context',
 	        'valueType' => 'string'
 	    ];
 

@@ -51,14 +51,13 @@ class CreateEntryElement extends AbstractFormsElement
 	    $data      =   [];
 	    $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
-        $this->_logger->info(print_r($this->_entry, true));
-
 	    $entry     =   $this->_evaluateArgs( $this->_entry);
 
-        $this->_logger->info(print_r($entry, true));
+	    $this->_logger->info( 'Creating entry ['.json_encode( $entry).']');
 
 	    try {
 	        $entry_id          =   $context->createEntry( $entry);
+	        $this->_logger->info( 'Entry created with entry id ['.$entry_id.']');
 	        $data['entry_id']  =   $entry_id;
 	        $elements          =   $this->_ok;
 	    } catch ( FormValidationException $e) {
@@ -78,7 +77,7 @@ class CreateEntryElement extends AbstractFormsElement
 	// UTIL
 	public function __toString()
 	{
-	    return parent::__toString();
+	    return parent::__toString().'['.$this->_resultVar.']';
 	}
 
 
