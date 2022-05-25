@@ -42,7 +42,7 @@ class DeleteEntryElement extends AbstractFormsElement
 
         $this->_logger->info('Deleting entry with id [' . $entry_id . ']');
 
-        $data = ['existing' => $context->getEntry($entry_id)];
+        $data = ['previous' => $context->getEntry($entry_id)];
         $context->deleteEntry($entry_id);
         $this->_logger->info('Deleted entry with id [' . $entry_id . ']');
 

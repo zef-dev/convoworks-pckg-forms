@@ -85,7 +85,7 @@ This element will delete an existing entry.
 Parameters:
 
 * `entry_id` - ID of the existing entry
-* `result_var` - Default `status`, name of the variable that contains additional information (`existing` : previous form entry as you would get it with load entry element)
+* `result_var` - Default `status`, name of the variable that contains additional information (`previous` : previous form entry as you would get it with load entry element)
 
 Flows:
 * `ok` - will be executed when the entry is deleted
