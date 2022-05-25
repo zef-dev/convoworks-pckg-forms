@@ -50,7 +50,7 @@ interface IFormsContext
 	
 	
 	/**
-	 * @param array $search
+	 * @param mixed $search
 	 * @param int $offset
 	 * @param int $limit
 	 * @param array $orderBy
@@ -59,7 +59,7 @@ interface IFormsContext
 	public function searchEntries( $search, $offset=0, $limit=self::DEFAULT_LIMIT, $orderBy=[]);
 	
 	/**
-	 * @param array $search
+	 * @param mixed $search
 	 * @return int
 	 */
 	public function getSearchCount( $search);
