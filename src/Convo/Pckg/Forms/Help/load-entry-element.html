@@ -1,12 +1,12 @@
 <div>
     <h3>Load Entry Element</h3>
-    <p>Returns single entry data by an <var>entry id</var>.</p>
+    <p>Returns single entry by an <var>entry id</var>.</p>
 
     <h3>Parameters:</h3>
     <ul>
-        <li><code>Context ID</code> - ID of the referenced <code>IAppointmentsContext</code></li>
-        <li><code>Entry ID</code> - ID of the existing appointment</li>
-        <li><code>Return Variable Name</code> - Default <code>status</code>, name of the variable that contains additional information (<code>entry</code>, <code>entry_id</code>)</li>
+        <li><code>Context ID</code> - ID of the referenced Form context</li>
+        <li><code>Entry ID</code> - ID of the existing entry</li>
+        <li><code>Return Variable Name</code> - Default <code>status</code>, name of the variable that contains additional information</li>
     </ul>
 
     <h3>Result variable fields</h3>
@@ -21,25 +21,25 @@
         <tbody>
         <tr>
             <td><code class="status-prop" title="Click to copy expression">entry</code></td>
-            <td>The entry which we loaded</td>
-            <td><code class="status-prop" title="Click to copy expression">message</code></td>
-            <td>Exception message</td>
+            <td>Loaded entry</td>
         </tr>
         </tbody>
     </table>
 
-    <p>Example of <code>${status.entry}</code> <var>Return Variable Name</var> value:</p>
+    <p>Example of returned <code>${status.entry}</code> as JSON:</p>
     <pre>
     <code>{
-        "field 1" : "value 1",
-        "field 2" : "value 2",
-        "entry_id" : "123"
+        "entry_id" : "123",
+        "user_id" : "123",
+        "meta_values" : {
+            "key_1" : "value 1",
+            "key_2" : "value 2"
+        }
     }</code>
     </pre>
 
     <h3>Flows:</h3>
     <ul>
         <li><code>OK</code> - will be executed if the entry was found</li>
-        <li><code>Not Found</code> - will be executed if the entry was not found</li>
     </ul>
 </div>
