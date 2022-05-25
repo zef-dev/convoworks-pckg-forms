@@ -119,16 +119,19 @@ Single entry representation as JSON.
 
 ### `SearchEntryElement`
 
-This element searches entries by given value.
+This element searches entries by given serach parameter.
 
 Parameters:
 
-* `entry_id` - ID of the existing entry
+* `search` - Search filter. Defined by referenced forms context.
+* `offset` - Offset
+* `limit` - Limit
+* `order_by` - key/val pairs of field name (defined by form context implementation) and sort order (ASC|DESC)
 * `result_var` - Default `status`, name of the variable that contains additional information (`result`: array of entry values)
 
 Flows:
 * `ok` - Executed when the form is loaded.
-* `not found` - will be executed if the entry was not found
+* `not found` - will be executed if no entry was found
 
 
 For more information, please check out [convoworks.com](https://convoworks.com)

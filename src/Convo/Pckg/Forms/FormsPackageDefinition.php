@@ -303,14 +303,13 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                 array(
                     'context_id' => $context_id_param,
                     'search' => array(
-                        'editor_type' => 'params',
+                        'editor_type' => 'desc',
                         'editor_properties' => array(
-                            'multiple' => true
                         ),
-                        'defaultValue' => array(),
+                        'defaultValue' => null,
                         'name' => 'Search',
-                        'description' => 'Search',
-                        'valueType' => 'array'
+                        'description' => 'Search value, type and structure are defined by referenced forms context',
+                        'valueType' => 'string'
                     ),
                     'limit'=>array(
                         'editor_type' => 'text',
@@ -388,16 +387,12 @@ class FormsPackageDefinition extends AbstractPackageDefinition
                     '_preview_angular' => array(
                         'type' => 'html',
                         'template' => '<div class="code">' .
-                            '<span class="statement">SEARCH FORM ENTRIES</span> in <b>{{ component.properties.context_id }}</b>' .
-                        ' <span ng-repeat="(key, val) in component.properties.search track by key">' .
-                        ' <span class="statement" ng-if="$first"><br>WHERE</span>' .
-                        ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
-                        ' </span>' .
+                        ' <span class="statement">SEARCH FORM ENTRIES</span> for <b>{{ component.properties.search }}</b> in <b>{{ component.properties.context_id }}</b>' .
                         ' <span ng-repeat="(key, val) in component.properties.order_by track by key">' .
                         ' <span class="statement" ng-if="$first"><br>ORDER BY</span>' .
                         ' <b>{{ key}}</b> = <b>{{ val }};</b>' .
                         ' </span>' .
-                            '</div>'
+                        '</div>'
                     ),
                     '_help' =>  array(
                         'type' => 'file',

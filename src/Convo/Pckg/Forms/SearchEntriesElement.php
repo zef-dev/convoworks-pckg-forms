@@ -66,7 +66,7 @@ class SearchEntriesElement extends AbstractFormsElement
         $data      =   [];
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
-        $search     =   $this->_evaluateArgs( $this->_search);
+        $search     =   $this->evaluateString( $this->_search);
         $order_by   =   $this->_sanitizeOrderBy( $this->_evaluateArgs( $this->_orderBy));
         $offset     =   $this->evaluateString( $this->_offset);
         $limit      =   $this->evaluateString( $this->_limit);

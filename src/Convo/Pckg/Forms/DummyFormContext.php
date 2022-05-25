@@ -62,13 +62,16 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     {
         $this->_checkEntry( $entry);
         
-        $entry['entry_id'] = StrUtil::uuidV4();
-        
         $entries   =    $this->_getEntries();
-        $entries[] =    $entry;
+        $entry_id  =    StrUtil::uuidV4();
+        $entries[] =    [
+            'entry_id' => $entry_id,
+            'time_created' => time(),
+            'meta_values' => $entry
+        ];
         $this->_saveEntries( $entries);
         
-        return $entry['entry_id'];
+        return $entry_id;
     }
     
     public function deleteEntry( $entryId)
@@ -85,10 +88,8 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     public function updateEntry( $entryId, $entry)
     {
         $existing   =   $this->getEntry( $entryId);
-        
-        $entry      =   array_merge( $existing, $entry, [ 'entry_id' => $entryId]);
-        
-        $this->_checkEntry( $entry);
+        $existing['meta_values'] = array_merge( $existing['meta_values'], $entry);
+        $this->_checkEntry( $existing['meta_values']);
         
         $entries    =   $this->_getEntries();
         $updated    =   [];
@@ -107,14 +108,14 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     public function searchEntries( $search, $offset=0, $limit=self::DEFAULT_LIMIT, $orderBy=[])
     {
         $found  =   $this->_performSearch( $search);
-        $found  =   array_slice( $found, $offset, $limit);
+        $found  =   \array_slice( $found, $offset, $limit);
         
         if ( !empty( $orderBy)) 
         {
-            usort( $found, function ( $a, $b) use ($orderBy) {
+            \usort( $found, function ( $a, $b) use ($orderBy) {
                 foreach ( $orderBy as $key=>$val)
                 {
-                    $ret = strcomp( $a[$key], $b[$key]);
+                    $ret = \strcmp( $a[$key], $b[$key]);
                     if ( $ret !== 0) {
                         return $ret * ($val==='DESC' ? -1 : 1);
                     }
@@ -138,7 +139,11 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
         
         foreach ( $entries as $entry) {
             foreach ( $search as $key=>$val) {
-                if ( $entry[$key] === $val) {
+                if ( isset( $entry[$key]) && $entry[$key] === $val) {
+                    $found[] = $entry;
+                    break;
+                }
+                if ( isset( $entry['meta_values'][$key]) && $entry['meta_values'][$key] === $val) {
                     $found[] = $entry;
                     break;
                 }
@@ -179,7 +184,7 @@ class DummyFormContext extends AbstractBasicComponent implements IServiceContext
     private function _getEntries()
     {
         if ( !isset( $this->_cachedEntries)) {
-            $params                      =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_USER, $this);
+            $params                 =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_USER, $this);
             $this->_cachedEntries   =   $params->getServiceParam( 'forms');
             if ( is_null( $this->_cachedEntries)) {
                 $this->_cachedEntries   =    [];
