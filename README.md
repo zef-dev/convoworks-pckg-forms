@@ -7,6 +7,8 @@ When we are talking about workflow components (elements), we have to primarily c
 
 Forms context is on the other hand bridge between workflow elements (Convoworks) and the real, concrete form system you are using in your system.
 
+Forms package favours field keys over numeric ids. When you are creating or updating entries, use field keys to define data. When you are loading entries, they will contain `meta_values` field, associative array containing field key / field value pairs.
+
 ## Forms context interface
 
 `IFormsContext` describes methods that should be implemented by a target form system. If you have e.g. WordPress Formidable Forms plugin, you can easily enable it to be used with Convoworks by implementing this interface.
