@@ -5,9 +5,9 @@ This package contains conversational workflow elements for managing form entries
 
 When we are talking about workflow components (elements), we have to primarily consider voice and conversational design needs. Their properties, sub-flows and general behavior are tailored to make conversational workflow as easy as possible. They are not related to any particular forms plugin or a similar 3rd party service provider.
 
-Forms context is on the other hand bridge between workflow elements (Convoworks) and the real, concrete form system you are using in your system.
+Form context is on the other hand a bridge between workflow elements (Convoworks) and the real, concrete form plugin you are using in your system.
 
-Forms package favours field keys over numeric ids. When you are creating or updating entries, use field keys to define data. When you are loading entries, they will contain `meta_values` field, associative array containing field key / field value pairs.
+Forms package favors field keys over numeric ids. When you are creating or updating entries, use field keys to define data. When you are loading entries, they will contain a `meta_values` field, an associative array containing field key / field value pairs.
 
 ## Forms context interface
 
@@ -46,14 +46,14 @@ All forms package workflow elements have the `context_id` property which hooks t
 Here are all common parameters:
 
 * `context_id` - Id of the referenced form context (context component that implements `IFormsContext`)
-* `result_var` - Variable that contains result. It is different for each element, so it will be descrived bellow.
+* `result_var` - Variable that contains result. It is different for each element, so it will be described below.
 
 Some elements have multiple sub-flows depending on the result we got. This kind of approach enables you to use less `IF` statements in your workflow. But in order not to force you to split workflow, some of the flows are optional and when left empty, the default flow will be executed.
 
 
 ### `CreateEntryElement`
 
-This element will create an entry and will retunrn newly created entry_id.
+This element will create an entry and will return newly created entry_id.
 
 Parameters:
 
@@ -95,7 +95,7 @@ Flows:
 
 ### `LoadEntryElement`
 
-This element will load existing entry by its id.
+This element will load an existing entry by its id.
 
 Parameters:
 
@@ -121,11 +121,11 @@ Single entry representation as JSON.
 
 ### `SearchEntryElement`
 
-This element searches entries by given serach parameter.
+This element searches entries by the given search parameter.
 
 Parameters:
 
-* `search` - Search filter. Defined by referenced forms context.
+* `search` - Search filter. Defined by a referenced form context.
 * `offset` - Offset
 * `limit` - Limit
 * `order_by` - key/val pairs of field name (defined by form context implementation) and sort order (ASC|DESC)
