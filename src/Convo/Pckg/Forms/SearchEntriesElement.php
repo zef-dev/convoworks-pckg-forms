@@ -67,7 +67,7 @@ class SearchEntriesElement extends AbstractFormsElement
         $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
         $search     =   $this->evaluateString( $this->_search);
-        $order_by   =   $this->_sanitizeOrderBy( $this->_evaluateArgs( $this->_orderBy));
+        $order_by   =   $this->_evaluateOrderBy( $this->_orderBy);
         $offset     =   $this->evaluateString( $this->_offset);
         $limit      =   $this->evaluateString( $this->_limit);
         
@@ -101,6 +101,17 @@ class SearchEntriesElement extends AbstractFormsElement
         foreach ( $elements as $elem) {
             $elem->read( $request, $response);
         }
+    }
+    
+    private function _evaluateOrderBy( $raw) {
+        if ( empty( $raw)) {
+            return [];
+        }
+        $order_by = [];
+        foreach ( $raw as $key=>$val) {
+            $order_by[$this->evaluateString( $key)] = $this->evaluateString( $val);
+        }
+        return $order_by;
     }
     
     private function _sanitizeOrderBy( $orderBy) 
