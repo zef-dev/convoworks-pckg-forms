@@ -51,7 +51,7 @@ class CreateEntryElement extends AbstractFormsElement
 	    $data      =   [];
 	    $params    =   $this->getService()->getComponentParams( IServiceParamsScope::SCOPE_TYPE_REQUEST, $this);
 
-	    $entry     =   $this->_evaluateArgs( $this->_entry);
+	    $entry     =   $this->getService()->evaluateArgs( $this->_entry, $this);
 
 	    $this->_logger->info( 'Creating entry ['.json_encode( $entry).']');
 

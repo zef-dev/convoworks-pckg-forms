@@ -55,7 +55,7 @@ class UpdateEntryElement extends AbstractFormsElement
 
         $this->_logger->info( 'Updating entry with id [' . $entry_id . ']');
 
-        $entry     =   $this->_evaluateArgs( $this->_entry);
+        $entry     =   $this->getService()->evaluateArgs( $this->_entry, $this);
 
         try {
             $data['previous']   =   $context->getEntry( $entry_id);
