@@ -6,5 +6,5 @@
         "elements", "templates"
     ],
     "description": "Contains conversational workflow elements for managing form entries in the Convoworks framework.",
-    "stability": "experimental"
+    "stability": "stable"
 }
